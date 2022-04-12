@@ -1,0 +1,207 @@
+/* BODY */
+body{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #E5E5E5;
+}
+
+
+
+
+
+/* MENU TOPO */
+.menu-topo{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(109, 109, 109);
+}
+
+.logo{
+    margin-left: 40px;
+}
+
+.participantes{
+    margin-right: 40px;
+}
+
+
+
+
+
+
+/* CONTEUDO */
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: 140px 0;
+}
+
+.mensagem{
+    display: flex;
+    margin: 10px 0;
+    padding: 10px 15px;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* Tipos de mensagem */
+.status{
+    background-color: #DCDCDC;
+}
+
+.normal{
+    background-color: white;
+}
+
+.privada{
+    background-color: #FFDEDE;
+}
+
+h1{
+    margin-right: 5px;
+    color: #AAAAAA;
+}
+
+
+
+
+
+/* MENU DIGITAÇÃO */
+.menu-digitacao{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0 0 10px rgb(109, 109, 109);
+}
+
+.menu-digitacao > input{
+    height: 40px;
+    width: 100%;
+    border: 0;
+    margin:0 40px;
+    font-style: italic;
+    font-size: 30px;
+    background-color: white;
+}
+
+.menu-digitacao > input::placeholder{
+    color: black;
+}
+
+.menu-digitacao > ion-icon{
+    font-size: 30px;
+    margin-right: 40px;
+}
+
+
+
+
+
+
+
+/* TELA INICIAL */
+
+.inicio{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: white;
+}
+
+.menu-inicial{
+    height: 350px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.usuario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.usuario > input{
+    width: 100%;
+    height: 60px;
+    border: 1px solid #D7D7D7;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.usuario > input::placeholder{
+    text-align: center;
+    font-size: 18px;
+    color: #AEAEAE;
+}
+
+.usuario > button{
+    height: 50px;
+    width: 100px;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+/* OPÇÕES DE MENSAGEM */
+
+.fundo{
+    width: 40%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, .6);
+}
+
+.opcoes-de-mensagem{
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: white;
+}
+
+h3{
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    align-items: center;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* FUNÇÕES */
+.desativar{
+    display: none;
+}
+
+span{
+    font-weight: bold;
+}
