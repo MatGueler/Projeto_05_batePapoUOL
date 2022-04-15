@@ -164,12 +164,12 @@ function processar(resposta){
         if(stt === "message"){
 
             if(destinatario === "Todos"){
-                achar.innerHTML += '<div class="mensagem normal">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + + txt +'</h2>    </div>'
+                achar.innerHTML += '<div class="mensagem normal">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt +'</h2>    </div>'
             }
 
             else{
                 if(destinatario === usuario){
-                    achar.innerHTML += '<div class="mensagem privada">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + + txt +'</h2>    </div>'
+                    achar.innerHTML += '<div class="mensagem privada">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt +'</h2>    </div>'
                 }
                 
             }
@@ -181,5 +181,8 @@ function processar(resposta){
 
     }
 
+    const elementoAparecer = document.querySelector(".container")
+
+    elementoAparecer.scrollIntoView(false);
 
 }
