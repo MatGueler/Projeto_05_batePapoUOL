@@ -8,7 +8,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='/reset.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='/style.css'>
-    <script src='/scripts.js'></script>
 </head>
 
 <body>
@@ -46,7 +45,7 @@
     <!-- CONTEUDO -->
 
     <div class="container">
-        <div class="mensagem status">
+        <!-- <div class="mensagem status">
             <h1>(00:00:00)</h1>
             <h2>ENTREI</h2>
         </div>
@@ -58,7 +57,8 @@
         <div class="mensagem privada">
             <h1>(00:00:00)</h1>
             <h2><span>Mateus</span> Oi, Joaana!!</h2>
-        </div>
+        </div> -->
+
     </div>
 
 
@@ -91,6 +91,7 @@
             </svg>
             <div class="usuario">
                 <input type="text" placeholder="Digite seu nome">
+                <p class="validacao desativar">Esse nome ja existe</p>
                 <BUtton onclick="comecar()">Entrar</BUtton>
             </div>
         </div>
@@ -111,7 +112,10 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
+    <script src='/scripts.js'></script>
 </body>
 
 </html>
