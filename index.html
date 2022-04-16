@@ -44,7 +44,7 @@
 
     <!-- CONTEUDO -->
 
-    <div class="mensagens">
+    <div class="mensagens ">
         <div class="container">
             <!-- <div class="mensagem status">
                 <h1>(00:00:00)</h1>
@@ -59,14 +59,14 @@
                 <h1>(00:00:00)</h1>
                 <h2><span>Mateus</span> Oi, Joaana!!</h2>
             </div> -->
-    
+
         </div>
     </div>
 
 
     <!-- MENU DE DIGITAÇÃO -->
 
-    <div class="menu-digitacao desativar">
+    <div class="menu-digitacao ">
 
         <input type="text" placeholder="Escreva aqui . . .">
 
@@ -108,9 +108,27 @@
     <div class="opcoes-de-mensagem desativar">
         <div class="topo-opcoes">
             <h3>Escolha um contato para enviar mensagem:</h3>
+            <div class="users">
+                <!-- <h4>Todos</h4> -->
+                <div class="caixa-participante" onclick="selecionar(this)">
+                    <ion-icon name="people"></ion-icon>
+                    <h4>Todos</h4>
+                    <div class="check desativar ">
+                        <ion-icon name="checkmark"></ion-icon>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="visibilidade">
             <h3>Escolha a visibilidade:</h3>
+            <div class="privacidade">
+                <div class="aberta">
+                    <ion-icon name="lock-open"></ion-icon>
+                </div>
+                <div class="fechada">
+                    <ion-icon name="lock-closed"></ion-icon>
+                </div>
+            </div>
         </div>
     </div>
 
