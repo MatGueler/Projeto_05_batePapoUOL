@@ -68,7 +68,7 @@
 
     <div class="menu-digitacao ">
 
-        <input type="text" placeholder="Escreva aqui . . .">
+        <input type="text" placeholder="Escreva aqui . . ." onkeydown="mensagemEnter(event)">
 
         <ion-icon name="paper-plane-outline" onclick="enviarMensagem()"></ion-icon>
 
@@ -92,7 +92,7 @@
                 </defs>
             </svg>
             <div class="usuario">
-                <input type="text" placeholder="Digite seu nome">
+                <input type="text" placeholder="Digite seu nome" onkeydown="nomeEnter(event)">
                 <p class="validacao desativar">Esse nome ja existe</p>
                 <BUtton onclick="comecar()">Entrar</BUtton>
             </div>
@@ -110,12 +110,12 @@
             <h3>Escolha um contato para enviar mensagem:</h3>
             <div class="users">
                 <!-- <h4>Todos</h4> -->
-                <div class="caixa-participante" onclick="selecionar(this)">
+                <div class="caixa-participante todos" onclick="selecionar(this)">
                     <div class="perfil">
                         <ion-icon name="people"></ion-icon>
                         <h4>Todos</h4>
                     </div>
-                    <div class="check ">
+                    <div class="check">
                         <ion-icon name="checkmark"></ion-icon>
                     </div>
                 </div>
