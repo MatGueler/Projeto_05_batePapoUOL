@@ -111,9 +111,11 @@
             <div class="users">
                 <!-- <h4>Todos</h4> -->
                 <div class="caixa-participante" onclick="selecionar(this)">
-                    <ion-icon name="people"></ion-icon>
-                    <h4>Todos</h4>
-                    <div class="check desativar ">
+                    <div class="perfil">
+                        <ion-icon name="people"></ion-icon>
+                        <h4>Todos</h4>
+                    </div>
+                    <div class="check ">
                         <ion-icon name="checkmark"></ion-icon>
                     </div>
                 </div>
@@ -122,11 +124,23 @@
         <div class="visibilidade">
             <h3>Escolha a visibilidade:</h3>
             <div class="privacidade">
-                <div class="aberta">
-                    <ion-icon name="lock-open"></ion-icon>
+                <div class="caixa-privacidade publico" onclick="escolherPrivacidade(this)">
+                    <div class="perfil">
+                        <ion-icon name="lock-open"></ion-icon>
+                        <h4>Público</h4>
+                        <div class="check">
+                            <ion-icon name="checkmark"></ion-icon>
+                        </div>
+                    </div>
                 </div>
-                <div class="fechada">
-                    <ion-icon name="lock-closed"></ion-icon>
+                <div class="caixa-privacidade privado" onclick="escolherPrivacidade(this)">
+                    <div class="perfil">
+                        <ion-icon name="lock-open"></ion-icon>
+                        <h4>Reservadamente</h4>
+                        <div class="check desativar ">
+                            <ion-icon name="checkmark"></ion-icon>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

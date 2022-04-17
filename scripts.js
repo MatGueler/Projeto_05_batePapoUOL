@@ -6,6 +6,8 @@ let txt;
 
 let stt;
 
+let tipo = "message";
+
 let destinatario;
 
 let remetente;
@@ -14,7 +16,7 @@ let praquem = "Todos";
 
 let usuariosSelecionados = []
 
-function deuCerto(){
+function deuCerto() {
 
 
     // console.log("Acerto")
@@ -22,13 +24,13 @@ function deuCerto(){
 
     const sairDaTela = document.querySelector(".inicio")
     sairDaTela.classList.add("desativar")
-    setInterval(verMensagens,3000)
+    setInterval(verMensagens, 3000)
     verMensagens()
 }
 
-function deuErro(erro){
+function deuErro(erro) {
     const statusCode = erro.response.status;
-    if(statusCode === 400){
+    if (statusCode === 400) {
         const validacao = document.querySelector(".validacao")
         validacao.classList.remove("desativar")
         const nomeDigitado = document.querySelector(".usuario > input")
@@ -36,19 +38,19 @@ function deuErro(erro){
     }
 }
 
-function on(){
+function on() {
     // console.log("ainda aqui")
 }
 
-function off(){
+function off() {
     console.log("sai")
 }
 
-function enviada(){
+function enviada() {
     console.log("enviou")
 }
 
-function naoEnviada(){
+function naoEnviada() {
     console.log("enviou")
 }
 
@@ -61,94 +63,137 @@ function naoEnviada(){
 
 // OUTRAS FUNÇÕES DE AÇÃO
 
-function usuarioOnline(){
+function usuarioOnline() {
 
     const nome = {
         name: usuario
     }
 
-    const requisicaoStatus = axios.post('https://mock-api.driven.com.br/api/v6/uol/status',nome)
+    const requisicaoStatus = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', nome)
 
     requisicaoStatus.then(on)
     requisicaoStatus.catch(off)
 }
 
-function selecionarNome(){
+function selecionarNome() {
     usuario = document.querySelector(".usuario > input").value
 }
 
-function comecar(){
+function comecar() {
     selecionarNome()
 
     const nome = {
         name: usuario
     }
 
-    const requisicaoNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants',nome)
+    const requisicaoNome = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', nome)
 
     requisicaoNome.then(deuCerto)
     requisicaoNome.catch(deuErro)
 
-    setInterval(usuarioOnline,5000)
+    console.log("destinatario")
+
+    setInterval(usuarioOnline, 5000)
 }
 
+
+
+
+function escolherPrivacidade(escolhido) {
+
+    const publico = document.querySelector(".publico")
+    const privado = document.querySelector(".privado")
+
+    const checkPublico = document.querySelector(".publico .check")
+    const checkPrivado = document.querySelector(".privado .check")
+
+    if (escolhido === publico) {
+        tipo = "message"
+        checkPublico.classList.remove("desativar")
+        checkPrivado.classList.add("desativar")
+    }
+    if (escolhido === privado) {
+        tipo = "private_message"
+        checkPrivado.classList.remove("desativar")
+        checkPublico.classList.add("desativar")
+        // tipo = "message"
+    }
+    // console.log(publico)
+    // console.log(escolhido === publico)
+}
 
 
 
 
 // ENVIAR MENSAGEM
 
-function enviarMensagem(){
+function enviarMensagem() {
     let digitado = document.querySelector(".menu-digitacao > input")
     let texto = digitado.value
-    const tipo = "message"
 
-    if(usuariosSelecionados.length>1){
+    // console.log(usuariosSelecionados)
 
-        for(let i = 0; i<usuariosSelecionados.length;i++){
+    if (usuariosSelecionados.length > 1) {
+
+        for (let i = 0; i < usuariosSelecionados.length; i++) {
             praquem = usuariosSelecionados[i]
-            
-            let mensagemEnviada = 
-            {
-                from: usuario,
-                to: praquem,
-                text: texto,
-                type: tipo // ou "private_message" para o bônus
+
+            if (praquem !== "Todos") {
+                // tipo = "private_message"
+                // tipo = "message"
+                let mensagemEnviada =
+                {
+                    from: usuario,
+                    to: praquem,
+                    text: texto,
+                    type: tipo // ou "private_message" para o bônus
+                }
+
+                const requisicaoMensagem = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagemEnviada)
+
+                requisicaoMensagem.then(enviada)
+                requisicaoMensagem.catch(naoEnviada)
+                // console.log(mensagemEnviada.type)
+                // console.log(mensagemEnviada.to)
+                // console.log(mensagemEnviada.from)
+                digitado.value = ""
+
             }
-
-            const requisicaoMensagem = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages',mensagemEnviada)
-
-            requisicaoMensagem.then(enviada)
-            requisicaoMensagem.catch(naoEnviada)
-            console.log(mensagemEnviada)
-
         }
     }
-    else{
+    else {
 
-    praquem = usuariosSelecionados[0]
+        if(usuariosSelecionados.length===0){
+            praquem = "Todos"
+        }
+        else{
+            praquem = usuariosSelecionados[0]
+        }
 
-    let mensagemEnviada = 
-    {
-        from: usuario,
-        to: praquem,
-        text: texto,
-        type: tipo // ou "private_message" para o bônus
+        if(praquem !== "Todos" || (praquem === "Todos" && tipo === "message")){
+            let mensagemEnviada =
+        {
+            from: usuario,
+            to: praquem,
+            text: texto,
+            type: tipo // ou "private_message" para o bônus
+        }
+
+        const requisicaoMensagem = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', mensagemEnviada)
+
+
+        requisicaoMensagem.then(enviada)
+        requisicaoMensagem.catch(naoEnviada)
+
+
+        console.log(typeof (texto))
+        digitado.value = ""
+        }
     }
-
-    const requisicaoMensagem = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages',mensagemEnviada)
-
-
-    requisicaoMensagem.then(enviada)
-    requisicaoMensagem.catch(naoEnviada)
-
-
-    console.log(typeof(texto))
-    digitado.value = ""
-    }
+    verMensagens()
 }
 
-function opcoesDeMensagem(){
+function opcoesDeMensagem() {
     const apagarFundo = document.querySelector(".fundo")
     const abrirAba = document.querySelector(".opcoes-de-mensagem")
     abrirAba.classList.toggle("desativar")
@@ -157,12 +202,12 @@ function opcoesDeMensagem(){
 }
 
 
-function verMensagens(){
+function verMensagens() {
     const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages')
     promise.then(processar)
 }
 
-function processar(resposta){
+function processar(resposta) {
     // console.log(resposta.data)
 
     const qtdMensagens = (resposta.data).length
@@ -173,7 +218,7 @@ function processar(resposta){
 
     achar.innerHTML = ""
 
-    for(let numResposta = 0; numResposta<qtdMensagens;numResposta++){
+    for (let numResposta = 0; numResposta < qtdMensagens; numResposta++) {
 
         let msg = resposta.data[numResposta]
 
@@ -187,31 +232,34 @@ function processar(resposta){
 
         hora = msg.time
 
-        if(stt === "message"){
+        if (stt === "private_message") {
 
-            if(destinatario === "Todos"){
-                achar.innerHTML += '<div class="mensagem normal">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt +'</h2>    </div>'
+            if (destinatario === usuario) {
+                achar.innerHTML += '<div class="mensagem privada">    <h1>' + hora + '</h1>    <h2><span>' + remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt + '</h2>    </div>'
+            }
+            if (remetente === usuario) {
+                achar.innerHTML += '<div class="mensagem privada">    <h1>' + hora + '</h1>    <h2><span>' + remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt + '</h2>    </div>'
             }
 
-            else{
-                if(destinatario === usuario){
-                    achar.innerHTML += '<div class="mensagem privada">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt +'</h2>    </div>'
-                }
-                if(remetente === usuario){
-                    achar.innerHTML += '<div class="mensagem privada">    <h1>'+ hora +'</h1>    <h2><span>'+ remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt +'</h2>    </div>'
-                }
-                
-            }
         }
 
-        if(stt === "status"){
-            achar.innerHTML += '<div class="mensagem status">    <h1>'+ hora +'</h1>    <h2>'+ remetente + " " + txt +'</h2>    </div>'
+        if (stt === "message") {
+            // if (destinatario === "Todos") {
+            //     achar.innerHTML += '<div class="mensagem normal">    <h1>' + hora + '</h1>    <h2><span>' + remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt + '</h2>    </div>'
+            // }
+
+            achar.innerHTML += '<div class="mensagem normal">    <h1>' + hora + '</h1>    <h2><span>' + remetente + ' </span>para<span> ' + destinatario + '</span>: ' + txt + '</h2>    </div>'
+
+        }
+
+        if (stt === "status") {
+            achar.innerHTML += '<div class="mensagem status">    <h1>' + hora + '</h1>    <h2>' + remetente + " " + txt + '</h2>    </div>'
         }
 
     }
     const elementoAparecer = document.querySelector(".container")
 
-    let  ultimofilho = document.querySelector(".mensagem:last-child")
+    let ultimofilho = document.querySelector(".mensagem:last-child")
 
     ultimofilho.scrollIntoView(false);
 
@@ -219,29 +267,29 @@ function processar(resposta){
 }
 
 
-function buscarParticipantes(){
+function buscarParticipantes() {
     const usersNaConversa = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
 
     usersNaConversa.then(chamar)
 }
 
-function chamar(participants){
+function chamar(participants) {
 
     const listaParticipantes = participants.data
 
 
-    for(let contador = 0; contador<listaParticipantes.length;contador++){
+    for (let contador = 0; contador < listaParticipantes.length; contador++) {
 
         const pessoas = document.querySelector(".users")
 
-        pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><ion-icon name="person-circle"></ion-icon><h4>'+ participants.data[contador].name+'</h4><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
+        pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
     }
 
     // console.log(participants.data[0].name)
 }
 
-function ehIgual(local){
-    if(local !== usuarioSelcionado.innerHTML){
+function ehIgual(local) {
+    if (local !== usuarioSelcionado.innerHTML) {
         // console.log("local" + local)
         // console.log("users" + usuarioSelcionado.innerHTML)
         return true
@@ -250,7 +298,7 @@ function ehIgual(local){
 
 let localElemento;
 
-function selecionar(elemento){
+function selecionar(elemento) {
 
     localElemento = elemento
 
@@ -259,32 +307,32 @@ function selecionar(elemento){
     let estaMarcado = elemento.classList.contains("marcado")
     // console.log(estaSelecionado)
 
-    if(estaMarcado === false){
+    if (estaMarcado === false) {
         elemento.classList.add("selecionado")
         let checkSelecionado = document.querySelector(".selecionado > .check")
-        usuarioSelcionado = document.querySelector(".selecionado > h4")
+        usuarioSelcionado = document.querySelector(".selecionado  h4")
         checkSelecionado.classList.remove("desativar")
         elemento.classList.remove("selecionado")
         elemento.classList.add("marcado")
         usuariosSelecionados.push(usuarioSelcionado.innerHTML)
     }
 
-    if(estaMarcado === true){
+    if (estaMarcado === true) {
         elemento.classList.add("selecionado")
-       let checkSelecionado = document.querySelector(".selecionado > .check")
-       usuarioSelcionado = document.querySelector(".selecionado > h4")
-       checkSelecionado.classList.add("desativar")
-       elemento.classList.remove("selecionado")
-       elemento.classList.remove("marcado")
-       let removerUsuarios =  usuariosSelecionados.filter(ehIgual)
-       usuariosSelecionados = removerUsuarios
-    //    console.log(usuariosSelecionados)
+        let checkSelecionado = document.querySelector(".selecionado > .check")
+        usuarioSelcionado = document.querySelector(".selecionado  h4")
+        checkSelecionado.classList.add("desativar")
+        elemento.classList.remove("selecionado")
+        elemento.classList.remove("marcado")
+        let removerUsuarios = usuariosSelecionados.filter(ehIgual)
+        usuariosSelecionados = removerUsuarios
+        //    console.log(usuariosSelecionados)
     }
     // console.log(usuariosSelecionados)
     // praquem = usuariosSelecionados[0]
     // console.log(praquem)
 }
 
-function enviarPrivada(){
-    console.log(usuariosSelecionados)
-}
+// function escolherPrivacidade() {
+//     console.log(usuariosSelecionados)
+// }
