@@ -96,6 +96,7 @@ function comecar() {
 
     setInterval(usuarioOnline, 5000)
     buscarParticipantes()
+    setInterval(buscarParticipantes, 10000)
 }
 
 
@@ -213,7 +214,7 @@ function enviarMensagem() {
             digitado.value = ""
         }
     }
-verMensagens()
+    verMensagens()
 }
 
 
@@ -309,17 +310,74 @@ function buscarParticipantes() {
     usersNaConversa.then(chamar)
 }
 
+// function chamar(participants) {
+
+//     const listaParticipantes = participants.data
+
+//     const pessoas = document.querySelector(".users")
+
+//     for (let contador = 0; contador < listaParticipantes.length; contador++) {
+
+//         if (usuario !== listaParticipantes[contador].name) {
+//             pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
+//         }
+//     }
+
+//     // console.log(participants.data[0].name)
+// }
+
 function chamar(participants) {
 
     const listaParticipantes = participants.data
 
     const pessoas = document.querySelector(".users")
 
+    // pessoas.innerHTML = '<div class="caixa-participante todos" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check"><ion-icon name="checkmark"></ion-icon></div></div>'
+
+    console.log(usuariosSelecionados)
+
     for (let contador = 0; contador < listaParticipantes.length; contador++) {
 
-        if (usuario !== listaParticipantes[contador].name) {
-            pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
+        if (usuariosSelecionados.length <= 1) {
+
+            if(contador === 0){
+                pessoas.innerHTML = '<div class="caixa-participante todos" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check"><ion-icon name="checkmark"></ion-icon></div></div>'
+            }
+
+            if (usuario !== listaParticipantes[contador].name) {
+                pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
+            }
         }
+        else {
+            if(contador === 0){
+                pessoas.innerHTML = '<div class="caixa-participante todos" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check desativar"><ion-icon name="checkmark"></ion-icon></div></div>'
+            }
+            for (let i = 0; i < usuariosSelecionados.length; i++) {
+                if (participants.data[contador].name === usuariosSelecionados[i]) {
+
+                    pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check"><ion-icon name="checkmark"></ion-icon></div></div>'
+
+                    console.log(participants.data[contador].name + "Esse usuario ja estava selecionado")
+                }
+                else{
+                    pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
+                }
+            }
+        }
+
+
+        // CODIGO RESERVA SE DER PROBLEMA, ABAIXO, SEM ATUALIZAÇÃO DO CHAT, MAS TUDO RODA SIMPLES.
+
+        // if (usuario !== listaParticipantes[contador].name) {
+        //     pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
+        // }
+
+        // for(let i = 0; i<usuariosSelecionados.length; i++){
+        //     if(participants.data[contador].name === usuariosSelecionados[i]){
+
+        //         console.log(participants.data[contador].name + "Esse usuario ja estava selecionado")
+        //     }
+        // }
     }
 
     // console.log(participants.data[0].name)
@@ -379,7 +437,7 @@ function mensagemEnter(event) {
 
     let tecla = event.key;
 
-    if(tecla === "Enter"){
+    if (tecla === "Enter") {
         enviarMensagem()
     }
 }
@@ -388,7 +446,7 @@ function nomeEnter(event) {
 
     let tecla = event.key;
 
-    if(tecla === "Enter"){
+    if (tecla === "Enter") {
         comecar()
     }
 }
