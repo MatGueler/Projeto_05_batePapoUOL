@@ -14,9 +14,13 @@ let remetente;
 
 let praquem = "Todos";
 
-let usuariosSelecionados = []
+let usuariosSelecionados = ["Todos"]
 
 let enter = "n"
+
+let usersNaConversa;
+
+let listaParticipantes;
 
 function deuCerto() {
 
@@ -305,7 +309,7 @@ function processar(resposta) {
 // BUSCAR PARTICIPANTES
 
 function buscarParticipantes() {
-    const usersNaConversa = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
+    usersNaConversa = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
 
     usersNaConversa.then(chamar)
 }
@@ -326,13 +330,29 @@ function buscarParticipantes() {
 //     // console.log(participants.data[0].name)
 // }
 
+function estaOnline(online) {
+    for (let i = 0; i < listaParticipantes.length; i++) {
+        
+        if (online === listaParticipantes[i].name || online === "Todos") {
+            // console.log(online)
+            // console.log(listaParticipantes[i].name)
+            return true
+        }
+    }
+}
+
 function chamar(participants) {
 
-    const listaParticipantes = participants.data
+    listaParticipantes = participants.data
 
     const pessoas = document.querySelector(".users")
 
     // pessoas.innerHTML = '<div class="caixa-participante todos" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check"><ion-icon name="checkmark"></ion-icon></div></div>'
+
+    // console.log(usuariosSelecionados)
+
+    let aindaOnline = usuariosSelecionados.filter(estaOnline)
+    usuariosSelecionados = aindaOnline
 
     console.log(usuariosSelecionados)
 
@@ -340,8 +360,8 @@ function chamar(participants) {
 
         if (usuariosSelecionados.length <= 1) {
 
-            if(contador === 0){
-                pessoas.innerHTML = '<div class="caixa-participante todos" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check"><ion-icon name="checkmark"></ion-icon></div></div>'
+            if (contador === 0) {
+                pessoas.innerHTML = '<div class="caixa-participante todos marcado" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check"><ion-icon name="checkmark"></ion-icon></div></div>'
             }
 
             if (usuario !== listaParticipantes[contador].name) {
@@ -349,19 +369,25 @@ function chamar(participants) {
             }
         }
         else {
-            if(contador === 0){
+
+            let verificador = 0;
+
+            if (contador === 0) {
                 pessoas.innerHTML = '<div class="caixa-participante todos" onclick="selecionar(this)"><div class="perfil"><ion-icon name="people"></ion-icon><h4>Todos</h4></div><div class="check desativar"><ion-icon name="checkmark"></ion-icon></div></div>'
             }
             for (let i = 0; i < usuariosSelecionados.length; i++) {
                 if (participants.data[contador].name === usuariosSelecionados[i]) {
 
-                    pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check"><ion-icon name="checkmark"></ion-icon></div></div>'
+                    pessoas.innerHTML += '<div class="caixa-participante marcado" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check"><ion-icon name="checkmark"></ion-icon></div></div>'
 
-                    console.log(participants.data[contador].name + "Esse usuario ja estava selecionado")
+                    // console.log(participants.data[contador].name + "Esse usuario ja estava selecionado")
+
+                    verificador = 1
+
                 }
-                else{
-                    pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar "><ion-icon name="checkmark"></ion-icon></div></div>'
-                }
+            }
+            if (verificador === 0) {
+                pessoas.innerHTML += '<div class="caixa-participante" onclick ="selecionar(this)"><div class = "perfil"><ion-icon name="person-circle"></ion-icon><h4>' + participants.data[contador].name + '</h4></div><div class = "check desativar"><ion-icon name="checkmark"></ion-icon></div></div>'
             }
         }
 
