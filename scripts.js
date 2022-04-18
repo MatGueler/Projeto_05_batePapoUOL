@@ -213,7 +213,7 @@ function enviarMensagem() {
             digitado.value = ""
         }
     }
-    verMensagens()
+verMensagens()
 }
 
 
